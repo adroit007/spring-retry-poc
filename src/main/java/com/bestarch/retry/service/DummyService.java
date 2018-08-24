@@ -6,9 +6,8 @@ import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 
-import com.kohls.merch.poedihub.v2.bean.Response;
-import com.kohls.merch.poedihub.v2.exception.EdiHubException;
-import com.kohls.merch.poedihub.v2.exception.EnableExceptionHandler;
+import com.bestarch.framework.exception.HandleException;
+import com.bestarch.framework.exception.bean.Response;
 
 /**
  * 
@@ -34,12 +33,12 @@ public class DummyService {
 	 *         or not We need to check the 'error' variable to check what has
 	 *         happened to the call.
 	 */
-	@EnableExceptionHandler(handler = CustomHandler.class)
+	@HandleException(handler = CustomHandler.class)
 	@CircuitBreaker(maxAttempts = 3, openTimeout = 5000, resetTimeout = 14000, include = Exception.class)
 	public Response generateRandomUserId() {
 		// this.sayHi();
 		if (true)
-			throw new EdiHubException("oops");
+			throw new RuntimeException("oops");
 		return retryTemplate.execute((context) -> {
 			System.out.println("Inside doWithRetry method");
 			return new Response(externalService.callExternal(), false);
@@ -75,11 +74,11 @@ public class DummyService {
 	 *         or not We need to check the 'error' variable to check what has
 	 *         happened to the call.
 	 */
-	@EnableExceptionHandler()
+	@HandleException()
 	public Response test() {
 		System.out.println("Inside test() method");
 		if (true)
-			throw new EdiHubException("oops");
+			throw new RuntimeException("oops");
 		return new Response("testing-abhishek", false);
 	}
 
