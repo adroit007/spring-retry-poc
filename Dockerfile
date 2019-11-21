@@ -11,10 +11,10 @@ VOLUME /tmp
 EXPOSE 8080
 
 # The application's jar file
-ARG JAR_FILE=target/spring_retry-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/spring-retry-0.0.1-SNAPSHOT.jar
 
 # Add the application's jar to the container
-ADD ${JAR_FILE} spring_retry.jar
+ADD ${JAR_FILE} spring-retry.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/spring_batch.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/spring-retry.jar"]
